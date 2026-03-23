@@ -105,3 +105,39 @@ class ExamSystem:
             except Exception as e:
                 print(f"生成准考证 {file_path} 出错：", e)
         print(f"准考证文件已生成在文件夹：{folder}")
+# ---------------------------
+# 主程序示例
+# ---------------------------
+def main():
+    system = ExamSystem()
+    system.load_students("人工智能编程语言学生名单.txt")
+
+    while True:
+        print("\n1. 查找学生信息  2. 随机点名  3. 生成考场安排表  4. 退出")
+        choice = input("请选择操作：")
+        if choice == "1":
+            student_id = input("请输入学号：")
+            student = system.find_student(student_id)
+            if student:
+                print("学生信息：", student)
+            else:
+                print("未找到该学号的学生信息。")
+        elif choice == "2":
+            num = input("请输入点名数量：")
+            selected = system.random_call(num)
+            if selected:
+                print("点名结果：")
+                for s in selected:
+                    print(s)
+        elif choice == "3":
+            shuffled = system.generate_exam_table()
+            if shuffled:
+                system.generate_admission_cards(shuffled)
+        elif choice == "4":
+            print("退出系统。")
+            break
+        else:
+            print("输入无效，请重新选择！")
+
+if __name__ == "__main__":
+    main()
